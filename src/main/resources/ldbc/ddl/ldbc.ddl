@@ -4,35 +4,36 @@ SET SCHEMA warehouse.LDBC
 
 
 CREATE GRAPH LDBC (
+
     -- Element types
     City       ( name STRING, url STRING ),
-    Comment    ( creationDate STRING, locationIP STRING, browserUsed STRING, content STRING, length INTEGER ),
     Company    ( name STRING, url STRING ),
     Continent  ( name STRING, url STRING ),
     Country    ( name STRING, url STRING ),
-    Forum      ( title STRING, creationDate STRING ),
-    Person     ( firstName STRING, lastName STRING, gender STRING, creationDate STRING, locationIP STRING, browserUsed STRING, birthday STRING ),
-    Post       ( imageFile STRING, creationDate STRING, locationIP STRING, browserUsed STRING, language STRING, content STRING, length INTEGER ),
     Tag        ( name STRING, url STRING ),
     Tagclass   ( name STRING, url STRING ),
     University ( name STRING, url STRING ),
+    Forum      ( creationDate STRING, title STRING ),
+    Comment    ( creationDate STRING, locationIP STRING, browserUsed STRING, content STRING, length INTEGER ),
+    Post       ( creationDate STRING, locationIP STRING, browserUsed STRING, content STRING, length INTEGER, imageFile STRING, language STRING),
+    Person     ( firstName STRING, lastName STRING, gender STRING, creationDate STRING, locationIP STRING, browserUsed STRING, birthday STRING ),
     CONTAINEROF,
     HASCREATOR,
     HASINTEREST,
-    HASMEMBER ( joinDate STRING ),
     HASMODERATOR,
     HASTAG,
     HASTYPE,
     ISLOCATEDIN,
     ISPARTOF,
     ISSUBCLASSOF,
-    KNOWS ( creationDate STRING ),
-    LIKES ( creationDate STRING ),
     REPLYOF,
-    STUDYAT ( classYear INTEGER ),
-    WORKAT ( workFrom INTEGER ),
+    HASMEMBER ( joinDate STRING ),
+    KNOWS     ( creationDate STRING ),
+    LIKES     ( creationDate STRING ),
+    STUDYAT   ( classYear INTEGER ),
+    WORKAT    ( workFrom INTEGER ),
 
-    -- Node types including mappings
+    -- Node types with mappings
     (Post)       FROM post,
     (Tag)        FROM tag,
     (Company)    FROM company,
@@ -45,7 +46,7 @@ CREATE GRAPH LDBC (
     (Country)    FROM country,
     (City)       FROM city,
 
-    -- Edge types including mappings
+    -- Edge types with mappings
     (Country)-[ISPARTOF]->(Continent)
         FROM country_ispartof_continent edge
             START NODES (Country)   FROM country   node JOIN ON edge.country.id = node.id

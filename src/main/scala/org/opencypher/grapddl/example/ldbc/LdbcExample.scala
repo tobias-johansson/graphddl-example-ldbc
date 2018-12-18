@@ -29,11 +29,10 @@ object LdbcExample extends App {
   session.cypher(
     s"""
        |FROM GRAPH sql.LDBC
-       |MATCH (p:Person)-[:STUDYAT]-(u:University)
+       |MATCH (p:Person)-[:STUDYAT]->(u:University)
        |WHERE u.name = 'National_Institute_of_Business_Management'
        |RETURN p.firstName, u.name
        |ORDER BY p.firstName
-       |LIMIT 100
      """.stripMargin).show
 
 }
