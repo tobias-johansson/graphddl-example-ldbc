@@ -11,14 +11,21 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.scala-lang:scala-library:2.11.12'
-    
-    implementation 'org.opencypher:spark-cypher:0.2.3'
-    
-    implementation 'org.apache.spark:spark-core_2.11:2.2.2'
-    implementation 'org.apache.spark:spark-sql_2.11:2.2.2'
-    implementation 'org.apache.spark:spark-catalyst_2.11:2.2.2'
-    implementation 'org.apache.spark:spark-hive_2.11:2.2.2'
+    def versions = [
+            caps:  '0.2.3',
+            spark: '2.2.2',
+            scala: '2.11.12',
+    ]
+
+    // CAPS
+    implementation group: 'org.opencypher',   name: 'spark-cypher',        version: versions.caps
+    // Spark
+    implementation group: 'org.apache.spark', name: 'spark-core_2.11',     version: versions.spark
+    implementation group: 'org.apache.spark', name: 'spark-sql_2.11',      version: versions.spark
+    implementation group: 'org.apache.spark', name: 'spark-catalyst_2.11', version: versions.spark
+    implementation group: 'org.apache.spark', name: 'spark-hive_2.11',     version: versions.spark
+    // Scala
+    implementation group: 'org.scala-lang',   name: 'scala-library',       version: versions.scala
 
 }
 
