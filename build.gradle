@@ -12,13 +12,14 @@ repositories {
 
 dependencies {
     implementation 'org.scala-lang:scala-library:2.11.12'
+    
     implementation 'org.opencypher:spark-cypher:0.2.3'
+    
     implementation 'org.apache.spark:spark-core_2.11:2.2.2'
     implementation 'org.apache.spark:spark-sql_2.11:2.2.2'
     implementation 'org.apache.spark:spark-catalyst_2.11:2.2.2'
     implementation 'org.apache.spark:spark-hive_2.11:2.2.2'
 
-    testImplementation 'junit:junit:4.12'
 }
 
-mainClassName = 'org.opencypher.grapddl.example.ldbc.App'
+mainClassName = 'org.opencypher.grapddl.example.ldbc.LdbcExample'
