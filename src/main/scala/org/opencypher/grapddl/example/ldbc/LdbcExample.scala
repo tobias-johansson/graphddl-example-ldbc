@@ -31,7 +31,7 @@ object LdbcExample extends App {
        |FROM GRAPH sql.LDBC
        |MATCH (p:Person)-[:STUDYAT]->(u:University)
        |WHERE u.name = 'National_Institute_of_Business_Management'
-       |RETURN p.firstName, u.name, u.site
+       |RETURN p.firstName, u.name, u.url
        |ORDER BY p.firstName
      """.stripMargin).show
 
