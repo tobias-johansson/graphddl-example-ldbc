@@ -23,7 +23,7 @@ object LdbcExample extends App {
     .withSqlDataSourceConfigs(resource("/ldbc/ddl/data-sources.json"))
 
   // Register SQL PGDS
-  session.registerSource(Namespace("sql"), sqlGraphSource)
+  session.catalog.register(Namespace("sql"), sqlGraphSource)
 
   // Run a Cypher query
   session.cypher(
@@ -31,7 +31,7 @@ object LdbcExample extends App {
        |FROM GRAPH sql.LDBC
        |MATCH (p:Person)-[:STUDYAT]->(u:University)
        |WHERE u.name = 'National_Institute_of_Business_Management'
-       |RETURN p.firstName, u.name, u.url
+       |RETURN p.firstName, u.name, u.site
        |ORDER BY p.firstName
      """.stripMargin).show
 
