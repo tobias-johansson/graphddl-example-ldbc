@@ -2,11 +2,10 @@ package org.opencypher.grapddl.example.ldbc
 
 import java.io.File
 
-import org.apache.spark.sql.{DataFrame, SparkSession}
 import org.apache.spark.sql.types.{StringType, StructField, TimestampType}
+import org.apache.spark.sql.{DataFrame, SparkSession}
 
 import scala.io.Source
-import scala.util.Properties
 
 
 object DataImport {
@@ -16,34 +15,32 @@ object DataImport {
     spark.sql(s"CREATE DATABASE $database")
 
     // Load LDBC data from CSV files into Hive tables
-    val csvFiles = new File(resource("/ldbc/csv/")).list()
-    csvFiles.foreach { csvFile =>
-      spark.read
-        .format("csv")
-        .option("header", value = true)
-        .option("inferSchema", value = true)
-        .option("delimiter", "|")
-        .load(resource(s"/ldbc/csv/$csvFile"))
-        // cast e.g. Timestamp to String
-        .withCompatibleTypes
-        .write
-        .saveAsTable(s"$database.${csvFile.dropRight("_0_0.csv.gz".length)}")
-    }
+    new File(resource("/ldbc/csv/"))
+      .list()
+      .foreach { csvFile =>
+        spark
+          .read
+          .format("csv")
+          .option("header", value = true)
+          .option("inferSchema", value = true)
+          .option("delimiter", "|")
+          .load(resource(s"/ldbc/csv/$csvFile"))
+          // cast e.g. Timestamp to String
+          .withCompatibleTypes
+          .write
+          .saveAsTable(s"$database.${csvFile.dropRight("_0_0.csv.gz".length)}")
+      }
 
     // Create views that normalize LDBC data where necessary
-    val views = readFile(resource("/ldbc/sql/ldbc_views.sql")).split(";")
-    views.foreach(spark.sql)
+    Source
+      .fromFile(resource("/ldbc/sql/ldbc_views.sql"))
+      .mkString
+      .split(";")
+      .foreach(spark.sql)
   }
 
   def resource(path: String): String =
     getClass.getResource(path).getFile
-
-  def readFile(fileName: String): String =
-    Source
-      .fromFile(fileName)
-      .getLines()
-      .mkString(Properties.lineSeparator)
-
 
   // Date/Time types are not supported yet, so we coerce them into strings
   implicit class DataFrameConversion(df: DataFrame) {
@@ -56,4 +53,5 @@ object DataImport {
       case (currentDf, _) => currentDf
     }
   }
+
 }
