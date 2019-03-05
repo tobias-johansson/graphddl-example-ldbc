@@ -1,20 +1,27 @@
 SET SCHEMA warehouse.LDBC
 
-
 CREATE GRAPH LDBC (
 
     -- Element types
-    City       ( name STRING, url STRING ),
-    Company    ( name STRING, url STRING ),
-    Continent  ( name STRING, url STRING ),
-    Country    ( name STRING, url STRING ),
-    Tag        ( name STRING, url STRING ),
-    Tagclass   ( name STRING, url STRING ),
-    University ( name STRING, url STRING ),
-    Forum      ( creationDate STRING, title STRING ),
-    Comment    ( creationDate STRING, locationIP STRING, browserUsed STRING, content STRING, length INTEGER ),
-    Post       ( creationDate STRING, locationIP STRING, browserUsed STRING, content STRING, length INTEGER, imageFile STRING, language STRING),
-    Person     ( firstName STRING, lastName STRING, gender STRING, creationDate STRING, locationIP STRING, browserUsed STRING, birthday STRING ),
+    Person       ( firstName STRING, lastName STRING, gender STRING, creationDate STRING, locationIP STRING, browserUsed STRING, birthday STRING ),
+
+    Place        ( name STRING, url STRING ),
+    Continent    EXTENDS Place (),
+    Country      EXTENDS Place (),
+    City         EXTENDS Place (),
+
+    Organisation ( name STRING, url STRING ),
+    Company      EXTENDS Organisation (),
+    University   EXTENDS Organisation (),
+
+    Tag          ( name STRING, url STRING ),
+    Tagclass     ( name STRING, url STRING ),
+
+    Forum        ( creationDate STRING, title STRING ),
+    Message      ( creationDate STRING, locationIP STRING, browserUsed STRING, content STRING, length INTEGER ),
+    Comment      EXTENDS Message (),
+    Post         EXTENDS Message ( imageFile STRING, language STRING ),
+
     CONTAINEROF,
     HASCREATOR,
     HASINTEREST,
