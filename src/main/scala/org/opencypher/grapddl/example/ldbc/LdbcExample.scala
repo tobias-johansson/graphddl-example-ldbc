@@ -4,8 +4,8 @@ import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql.internal.StaticSQLConf.CATALOG_IMPLEMENTATION
 import org.opencypher.grapddl.example.ldbc.DataImport._
 import org.opencypher.okapi.api.graph.Namespace
-import org.opencypher.spark.api.io.HiveFormat
-import org.opencypher.spark.api.io.sql.{IdGenerationStrategy, SqlDataSourceConfig}
+import org.opencypher.spark.api.io.sql.IdGenerationStrategy
+import org.opencypher.spark.api.io.sql.SqlDataSourceConfig.Hive
 import org.opencypher.spark.api.{CAPSSession, GraphSources}
 
 object LdbcExample extends App {
@@ -15,15 +15,13 @@ object LdbcExample extends App {
   implicit val spark: SparkSession = session.sparkSession
 
   // Import data from CSV
-  // populateHiveDatabase("LDBC")
+//   populateHiveDatabase("LDBC")
 
   // Create SQL PGDS
   val sqlGraphSource = GraphSources
     .sql(resource("/ldbc/ddl/ldbc.ddl"))
-    .withIdGenerationStrategy(IdGenerationStrategy.HashBasedId)
-    .withSqlDataSourceConfigs(List(SqlDataSourceConfig(
-      dataSourceName = "warehouse", storageFormat = HiveFormat))
-    )
+    .withIdGenerationStrategy(IdGenerationStrategy.HashedId)
+    .withSqlDataSourceConfigs(Map("warehouse" -> Hive))
 
   // Register SQL PGDS
   session.catalog.register(Namespace("sql"), sqlGraphSource)

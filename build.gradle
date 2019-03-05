@@ -12,7 +12,7 @@ repositories {
 
 dependencies {
     def versions = [
-            caps:  '0.2.3',
+            caps:  '0.2.7',
             spark: '2.2.2',
             scala: '2.11.12',
     ]

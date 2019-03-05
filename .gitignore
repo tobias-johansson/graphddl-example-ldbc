@@ -5,6 +5,7 @@
 build
 
 .idea/
+*.iml
 derby.log
 metastore_db/
 out/
