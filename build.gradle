@@ -12,18 +12,18 @@ repositories {
 
 dependencies {
     def versions = [
-            caps:  '0.2.7',
-            spark: '2.2.2',
-            scala: '2.11.12',
+            caps:  '0.3.1',
+            spark: '2.4.0',
+            scala: '2.12.8',
     ]
 
     // CAPS
     implementation group: 'org.opencypher',   name: 'spark-cypher',        version: versions.caps
     // Spark
-    implementation group: 'org.apache.spark', name: 'spark-core_2.11',     version: versions.spark
-    implementation group: 'org.apache.spark', name: 'spark-sql_2.11',      version: versions.spark
-    implementation group: 'org.apache.spark', name: 'spark-catalyst_2.11', version: versions.spark
-    implementation group: 'org.apache.spark', name: 'spark-hive_2.11',     version: versions.spark
+    implementation group: 'org.apache.spark', name: 'spark-core_2.12',     version: versions.spark
+    implementation group: 'org.apache.spark', name: 'spark-sql_2.12',      version: versions.spark
+    implementation group: 'org.apache.spark', name: 'spark-catalyst_2.12', version: versions.spark
+    implementation group: 'org.apache.spark', name: 'spark-hive_2.12',     version: versions.spark
     // Scala
     implementation group: 'org.scala-lang',   name: 'scala-library',       version: versions.scala
 
